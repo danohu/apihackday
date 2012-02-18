@@ -87,7 +87,7 @@ MPTREND.map = {
 	},
 	
 	getEntities: function (mpid) {
-		mpid = mpid || '10251';
+		var mpid = mpid || '10251';
 		fullJsonUrl = this.jsonUrl + '?mp=' + mpid;
 		var self = this;
         // do Ajax to put in cache
