@@ -62,7 +62,7 @@ MPTREND.map = {
 		this.getGeoLocation();
 		//draw the map
 		this.mapObj = new google.maps.Map(document.getElementById('map'), this.mapOptions);
-		this.getEntities();
+		//this.getEntities();
 	},
 	
 	getGeoLocation: function () {
