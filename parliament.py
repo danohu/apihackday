@@ -14,7 +14,8 @@ def mptext(mpid = '10251'): #default is william hague
 
 def mpspeeches(mpid):
     rawtxt = theywork.api.getHansard(output = 'js', person = mpid)
-    return json.loads(rawtxt)
+    text = ''.join(x for x in rawtxt if ord(x)<127)
+    return json.loads(text)
 
 def mplist():
      mplist = theywork.api.getMPs(output = 'js')

@@ -109,7 +109,7 @@ MPTREND.map = {
 					(function (mymarker, mylatlng) {
 					
 						var infowindow = new google.maps.InfoWindow({
-							content: jsonData[i].name,
+							content: jsonData[i].context,
 							position: mylatlng
 						});
 						

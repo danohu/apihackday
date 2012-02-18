@@ -17,9 +17,12 @@ class DemoHandler(tornado.web.RequestHandler):
 
     def mp_places(self, mpid):
         mckey = str('places_%s' % mpid)
+        print('key is %s' % mckey)
         places = mc.get(mckey)
         if places is None:
-            text = parliament.mptext()
+            print('not in cache')
+            text = parliament.mptext(mpid)
+            text = ''.join(x for x in text if ord(x)<127)
             places = entities.places_from_text(text)
             mc.set(mckey, places)
         return places
@@ -30,7 +33,9 @@ class DemoHandler(tornado.web.RequestHandler):
         return json.dumps(locations)
         
     def get(self):
+        #import pdb; pdb.set_trace()
         mpid = self.get_argument('mp', '10251')
+        print('mpid is %s' % mpid)
         self.content_type = 'application/json'
         self.set_header("Content-Type", "application/json") 
         self.write(self.get_locations(mpid))
@@ -66,6 +71,7 @@ static_path =  os.path.join(os.path.dirname(__file__), "static")
 application = tornado.web.Application([ 
     (r"/", MainHandler),
     (r"/code/demo", DemoHandler),
+    (r"/entities.json", DemoHandler),
     (r"/code/mplist", MPListHandler),
                             ])
 if __name__ == "__main__":
