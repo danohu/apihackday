@@ -10,3 +10,9 @@ def mptext(mpid = '10251'): #default is william hague
     statements = [x['body'] for x in jstxt['rows']]
     return '\n'.join(statements)
 
+
+def mplist():
+     mplist = theywork.api.getMPs(output = 'js')
+     asciisafe = ''.join(x for x in mplist if ord(x) < 127)
+     return json.loads(asciisafe)
+
