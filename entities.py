@@ -3,7 +3,7 @@ from private import KEY_CALAIS
 from calais import Calais
 calais = Calais(KEY_CALAIS, submitter="python-calais demo")
 
-def people_from_text(text):
+def places_from_text(text):
     place_types = ('City', 'Continent', 'Country', 'ProvinceOrState')
     result = calais.analyze(text)
     places = []
