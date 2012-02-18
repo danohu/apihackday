@@ -4,33 +4,33 @@ MPTREND.map = {
 	//should be one off initialising for this first bit
 	mapObj: undefined,
 	infowindow: undefined,
-	jsonUrl: '/entities.json',
+	jsonUrl: 'code/demo',
 	currentAjaxRequest: undefined,
 	filter: {
         mp: {
             clusterImage: [{
-                url: '/site/img/map_icons/mp_30x30.png',
+                url: '/img/map_icons/mp_30x30.png',
                 height: 31,
                 width: 30,
                 anchor: [5],
                 textColor: '#002776',
                 textSize: 12
             }, {
-                url: '/site/img/mp_30x30.png',
+                url: '/img/map_icons/mp_30x30.png',
                 height: 35,
                 width: 32,
                 anchor: [7],
                 textColor: '#002776',
                 textSize: 12
             }, {
-                url: '/site/img/map_icons/mp_45x45.png',
+                url: '/img/map_icons/mp_45x45.png',
                 height: 45,
                 width: 45,
                 anchor: [11],
                 textColor: '#002776',
                 textSize: 12
             }],
-            markerImageURL: "/site/img/map_icons/mp.png",
+            markerImageURL: "/img/map_icons/mp.png",
             markerImageWidth: 40,
             markerImageHeight: 38,
             markerAnchorX: 20,
