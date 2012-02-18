@@ -45,6 +45,10 @@
         #feeds > div:target {
             display: block;
         }
+        #feeds div.tab img.thumbnail {
+            float: left;
+            padding: 0 5px 5px 0;
+        }
     </style>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
     <script>
@@ -83,7 +87,11 @@
                 }
                 title += data.rows[i].hdate;
                 out.append('<h3>' + title + '</h3>');
-                out.append(data.rows[i].body);
+                if (data.rows[i].body.length > 10) {
+                    out.append(data.rows[i].body);
+                } else {
+                    out.append(data.rows[i].title);
+                }
             }
             $('#hansard').html(out);
         }
@@ -93,6 +101,7 @@
             for (var i=0; i<data.response.editorsPicks.length; i++) {
                 //console.log(data.rows[i]);
                 out.append('<h3>' + data.response.editorsPicks[i].webTitle + '</h3>');
+                out.append('<img src="' + data.response.editorsPicks[i].fields.thumbnail + '" class="thumbnail" alt="">')
                 out.append(data.response.editorsPicks[i].fields.body);
             }
             $('#guardian').html(out);
