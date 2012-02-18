@@ -1,4 +1,13 @@
 var MPTREND = MPTREND || {};
+var markersArray = [];
+
+function clearOverlays() {
+	  if (markersArray) {
+			    for (var i = 0; i < markersArray.length; i++ ) {
+						      markersArray[i].setMap(null);
+									    }
+					  }
+}
 
 MPTREND.map = {
 	//should be one off initialising for this first bit
@@ -87,7 +96,9 @@ MPTREND.map = {
 	},
 	
 	getEntities: function (mpid) {
-		mpid = mpid || '10251';
+								 clearOverlays();
+		
+								 mpid = mpid || '10251';
 		fullJsonUrl = this.jsonUrl + '?mp=' + mpid;
 		var self = this;
         // do Ajax to put in cache
@@ -105,7 +116,8 @@ MPTREND.map = {
 					  map: self.mapObj,
 					  title: title
 					});
-					
+				markersArray.push(marker);
+
 					(function (mymarker, mylatlng) {
 					
 						var infowindow = new google.maps.InfoWindow({
