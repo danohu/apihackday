@@ -4,33 +4,33 @@ MPTREND.map = {
 	//should be one off initialising for this first bit
 	mapObj: undefined,
 	infowindow: undefined,
-	jsonUrl: 'code/demo',
+	jsonUrl: '/entities.json',
 	currentAjaxRequest: undefined,
 	filter: {
         mp: {
             clusterImage: [{
-                url: '/img/map_icons/mp_30x30.png',
+                url: '/site/img/map_icons/mp_30x30.png',
                 height: 31,
                 width: 30,
                 anchor: [5],
                 textColor: '#002776',
                 textSize: 12
             }, {
-                url: '/img/map_icons/mp_30x30.png',
+                url: '/site/img/mp_30x30.png',
                 height: 35,
                 width: 32,
                 anchor: [7],
                 textColor: '#002776',
                 textSize: 12
             }, {
-                url: '/img/map_icons/mp_45x45.png',
+                url: '/site/img/map_icons/mp_45x45.png',
                 height: 45,
                 width: 45,
                 anchor: [11],
                 textColor: '#002776',
                 textSize: 12
             }],
-            markerImageURL: "/img/map_icons/mp.png",
+            markerImageURL: "/site/img/map_icons/mp.png",
             markerImageWidth: 40,
             markerImageHeight: 38,
             markerAnchorX: 20,
@@ -89,7 +89,6 @@ MPTREND.map = {
 	getEntities: function () {
 		var self = this;
         // do Ajax to put in cache
-        console.log('getEntities called');
         this.currentAjaxRequest = $.ajax({
 			url: this.jsonUrl,
 			dataType: "json",
@@ -124,3 +123,43 @@ MPTREND.map = {
 	}
 
 };
+
+MPTREND.getMPs = function () {
+	console.log('getMPs called');
+
+    var ajaxRequest = $.ajax({
+		url: '/mplist.json',
+		dataType: "json",
+
+        success: function (jsonData) {
+        
+        	$('#mps').empty();
+            for (var i in jsonData) {		
+				//var s = '<a title="' + jsonData[i].name + '" href="' + jsonData[i].person_id + '">' + jsonData[i].name + '</a><br/>';
+				//$('#mps').append(s);
+				
+				
+
+			
+				
+				
+				
+				if(i > 20) break;	
+			}
+			
+        $('#mps a').each().click(function(){
+        	console.log('clicked');
+        	return false;
+        });
+			
+        }
+        
+
+
+
+
+    });
+	
+}
+
+//https://api.pearson.com/longman/dictionary/entry.json?q=cat&apikey=1766cba83f05e0a627fbe111ab8ae039
