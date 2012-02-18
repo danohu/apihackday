@@ -52,7 +52,8 @@
 						<h2>Example tabs</h2>
 						<p>Click the tabs below to toggle between hidden panes, even via dropdown menus.</p>
 						<ul class="nav nav-tabs" id="tab">
-							<li class="active"><a data-toggle="tab" href="#mps">MPs</a</li>
+							<li class="active"><a data-toggle="tab" href="#mps">MP list</a</li>
+							<li class=""><a data-toggle="tab" href="#hansard">Hansard</a></li>
 							<li class=""><a data-toggle="tab" href="#guardian">Guardian</a></li>
 							<li class=""><a data-toggle="tab" href="#twitter">Twitter</a></li>
 						</ul>
@@ -60,6 +61,9 @@
 						<div class="tab-content" id="myTabContent">
 							<div id="mps" class="tab-pane fade active in">
 							  <p>Loading MPs content ...</p>
+							</div>
+							<div id="hansard" class="tab-pane fade active in">
+							  <p>Loading Hansard content ...</p>
 							</div>
 							<div id="guardian" class="tab-pane fade active in">
 							  <p>Loading Guardian content ...</p>
@@ -97,6 +101,9 @@
   <script src="js/plugins.js"></script>
   <script src="js/script.js"></script>
 
+
+
+
 <script>
 	$(function() {
 		MPTREND.map.init();
@@ -105,77 +112,17 @@
 
 		//$("#feed").resizable();
 		$('.tabs a:last').tab('show');
+		
+		
+        $('.tabs a').bind('click', function(event) {
+        	console.log('tab clicked');
+            mappings[$(this).attr('href')]();
+        })
+		
 
 	});
 </script>
 
-
-<script>
-        var currentSearch = 'London';
-        function getHansard() {
-
-            $.ajax( {
-                url: 'getHansard.json',
-                data: 'url=http://www.theyworkforyou.com/api/getHansard?key=C96JqqCACkSJGaXNMyGxyLei&search=' + currentSearch + '&output=js',
-                dataType: 'json',
-                success: callbackHansard,
-                error: errorHandler
-            })
-        }
-        function getGuardian() {
-            console.log('guardian');
-            $.ajax( {
-                url: 'uk-home.json',
-                data: 'url=http://content.guardianapis.com/uk-home?format=json&show-fields=all&show-tags=all&show-editors-picks=true&edition=UK&q=' + currentSearch + '&order-by=newest&api-key=tgtgbz3h8ny7hnn9uz45gjvz',
-                dataType: 'json',
-                success: callbackGuardian,
-                error: errorHandler
-            })
-        }
-        function getDictionary() { console.log('dictionary'); }
-        function getTwitter() { console.log('twitter'); }
-        
-        function callbackHansard(data, textStatus, jqXHR) {
-            console.log('callbackHansard')
-            var out = $('<div></div>');
-            for (var i=0; i<data.rows.length; i++) {
-                //console.log(data.rows[i]);
-                var title = '';
-                if (typeof data.rows[i].speaker !== 'undefined') {
-                    title = data.rows[i].speaker.first_name + ' ' + data.rows[i].speaker.last_name + ' ';
-                }
-                title += data.rows[i].hdate;
-                out.append('<h3>' + title + '</h3>');
-                out.append(data.rows[i].body);
-            }
-            $('#hansard').html(out);
-        }
-        function callbackGuardian(data, textStatus, jqXHR) {
-            console.log('callbackGuardian')
-            var out = $('<div></div>');
-            for (var i=0; i<data.response.editorsPicks.length; i++) {
-                //console.log(data.rows[i]);
-                out.append('<h3>' + data.response.editorsPicks[i].webTitle + '</h3>');
-                out.append(data.response.editorsPicks[i].fields.body);
-            }
-            $('#guardian').html(out);
-        }
-        function errorHandler(jqXHR, textStatus, errorThrown) {
-            console.log('error: ' + textStatus);
-            console.log(errorThrown);
-        }
-        var mappings = {
-            '#hansard' : getHansard,
-            '#guardian' : getGuardian,
-            '#dictionary' : getDictionary,
-            '#twitter' : getTwitter
-        }
-        $(document).ready(function() {
-            $('#tab li a').bind('click', function(event) {
-                mappings[$(this).attr('href')]();
-            })
-        })
-    </script>
 
 </body>
 </html>

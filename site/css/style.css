@@ -100,6 +100,10 @@ body {
 	min-height: 700px;
 }
 
+#mps a {
+	display: block;
+	cursor: pointer;
+}
 
 @media only screen and (min-width: 35em) {
   

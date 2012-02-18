@@ -51,7 +51,7 @@ MPTREND.map = {
 	},
 
 	mapOptions: {
-	  zoom: 8,
+	  zoom: 3,
 	  center: new google.maps.LatLng(53, -3.0),
 	  mapTypeId: google.maps.MapTypeId.ROADMAP
 	},
@@ -71,7 +71,7 @@ MPTREND.map = {
 		
 		if(navigator.geolocation) {
 			navigator.geolocation.getCurrentPosition(function(position) {
-				self.mapOptions.zoom = 8;
+				self.mapOptions.zoom = 3;
 			    self.mapOptions.center = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
 			    //display default message - although, if they are members we could welcome them back?
 			    infowindow = new google.maps.InfoWindow({
@@ -137,31 +137,19 @@ MPTREND.getMPs = function () {
         
         	$('#mps').empty();
             for (var i in jsonData) {		
-				//var s = '<a title="' + jsonData[i].name + '" href="' + jsonData[i].person_id + '">' + jsonData[i].name + '</a><br/>';
-				//$('#mps').append(s);
-				
-				
 
-			
-				
-				
-				
+				var s = $('<a id="'+ jsonData[i].person_id +'">' + jsonData[i].name + '</a>').bind('click', clickHandler);
+				$('#mps').append(s);
+
 				if(i > 20) break;	
-			}
-			
-        $('#mps a').each().click(function(){
-        	console.log('clicked');
-        	return false;
-        });
-			
+			}	
         }
-        
-
-
-
-
     });
 	
+}
+
+function clickHandler() {
+	MPTREND.map.getEntities($(this).attr('id'));
 }
 
 //https://api.pearson.com/longman/dictionary/entry.json?q=cat&apikey=1766cba83f05e0a627fbe111ab8ae039
