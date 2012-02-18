@@ -3,6 +3,7 @@ import tornado.ioloop
 import tornado.web
 import json
 import entities, parliament
+import urllib2
 
 import memcache
 mc = memcache.Client(['127.0.0.1:11211'], debug=1)
@@ -27,11 +28,22 @@ class DemoHandler(tornado.web.RequestHandler):
         self.set_header("Content-Type", "application/json") 
         self.write(output)
 
+class MPListHandler(tornado.web.RequestHandler):
+    def get(self):
+        cached = mc.get('mplist')
+        if cached is None:
+            mplist = urllib2.urlopen('http://www.theyworkforyou.com/api/getMPs?key=C96JqqCACkSJGaXNMyGxyLei&output=js').read()
+            mc.set('mplist', mplist)
+        self.set_header("Content-Type", "application/json") 
+        self.write(cached or mplist)
+
+
 static_path =  os.path.join(os.path.dirname(__file__), "static")
 
 application = tornado.web.Application([ 
     (r"/", MainHandler),
     (r"/code/demo", DemoHandler),
+    (r"/code/mplist", MPListHandler),
                             ])
 if __name__ == "__main__":
     application.listen(9000)

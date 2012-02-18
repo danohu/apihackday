@@ -86,11 +86,13 @@ MPTREND.map = {
 		return false;
 	},
 	
-	getEntities: function () {
+	getEntities: function (mpid) {
+		mpid = mpid || '10251';
+		fullJsonUrl = this.jsonUrl + '?mp=' + mpid;
 		var self = this;
         // do Ajax to put in cache
         this.currentAjaxRequest = $.ajax({
-			url: this.jsonUrl,
+			url: fullJsonUrl,
 			dataType: "json",
             //data: $.param(requestQS),
             success: function (jsonData) {
