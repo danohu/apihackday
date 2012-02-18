@@ -14,6 +14,29 @@ class MainHandler(tornado.web.RequestHandler):
         self.write(indextxt)
 
 class DemoHandler(tornado.web.RequestHandler):
+
+    def mp_places(self, mpid):
+        mckey = str('places_%s' % mpid)
+        places = mc.get(mckey)
+        if places is None:
+            text = parliament.mptext()
+            places = entities.places_from_text(text)
+            mc.set(mckey, places)
+        return places
+
+    def get_locations(self, mpid):
+        places = self.mp_places(mpid)
+        locations = entities.placelocations(places)
+        return json.dumps(locations)
+        
+    def get(self):
+        mpid = self.get_argument('mp', '10251')
+        self.content_type = 'application/json'
+        self.set_header("Content-Type", "application/json") 
+        self.write(self.get_locations(mpid))
+
+
+class NewDemoHandler(tornado.web.RequestHandler):
     def get(self):
         mpid = self.get_argument('mp', '10251')
         mckey = str('places_%s' % mpid)

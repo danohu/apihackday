@@ -13,19 +13,22 @@ def places_from_text(text):
     return places
 
 def placelocations(places):
-    output = []
-    for place in places:
-        try:
-            latitude =  place['resolutions'][0]['latitude']
-            longitude =  place['resolutions'][0]['longitude']
-        except KeyError:
-            latitude = None
-            longitude = None
-        output.append({
-            'name' : place['name'],
-            'latitude' : latitude,
-            'longitude' : longitude,
-            })
-    return output
+    return [placelocation(place) for place in places]
 
+def context(place):
+    instance = place['instances'][0]
+    return '%s <b>%s</b> %s' % (instance['prefix'], instance['exact'], instance['suffix'])
 
+def placelocation(place):
+    try:
+        latitude =  place['resolutions'][0]['latitude']
+        longitude =  place['resolutions'][0]['longitude']
+    except KeyError:
+        latitude = None
+        longitude = None
+    return {
+        'name' : place['name'],
+        'latitude' : latitude,
+        'longitude' : longitude,
+        'context' : context(place),
+        }
