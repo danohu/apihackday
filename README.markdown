@@ -6,7 +6,7 @@ This service analyzes the text of an MPs parliamentary contributions, extracting
 
 We use TheyWorkForYou to provide structured text from parliament, OpenCalais to identify placenames from that text, and Google Maps to display them.
 
-One-day hack project from February 2012 API Hackathon (http://apihackathonlondon.eventbrite.com/)
+One-day hack project from February 2012 API Hackathon (http://apihackathonlondon.eventbrite.com/). We won 2nd place!
 
 It is currently running at http://viz.ohuiginn.net/
 
@@ -47,8 +47,8 @@ An config file for nginx is included. Copy this into /etc/nginx/sites-enabled, a
 $ python site.py
 
 #Credits
-
-@danohu
-@bmcorser
-@roppa_uk
-@surinder
+ - Dan O'Huiginn, [@danohu](http://twitter.com/danohu)
+ - Ben Marshall-Corser, [@bmcorser](http://twitter.com/bmcorser)
+ - Mark Robson, [@roppa_uk](http://twitter.com/roppa_uk)
+ - Rob Crowther, [@robertc](http://twitter.com/robertc)
+ - Surinder Siama, [@surinder](http://twitter.com/surinder)
