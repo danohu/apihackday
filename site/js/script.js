@@ -1,10 +1,19 @@
 var MPTREND = MPTREND || {};
+var markersArray = [];
+
+function clearOverlays() {
+	  if (markersArray) {
+			    for (var i = 0; i < markersArray.length; i++ ) {
+						      markersArray[i].setMap(null);
+									    }
+					  }
+}
 
 MPTREND.map = {
 	//should be one off initialising for this first bit
 	mapObj: undefined,
 	infowindow: undefined,
-	jsonUrl: '/entities.json',
+	jsonUrl: '/code/demo',
 	currentAjaxRequest: undefined,
 	filter: {
         mp: {
@@ -51,7 +60,7 @@ MPTREND.map = {
 	},
 
 	mapOptions: {
-	  zoom: 3,
+	  zoom: 2,
 	  center: new google.maps.LatLng(53, -3.0),
 	  mapTypeId: google.maps.MapTypeId.ROADMAP
 	},
@@ -62,7 +71,7 @@ MPTREND.map = {
 		this.getGeoLocation();
 		//draw the map
 		this.mapObj = new google.maps.Map(document.getElementById('map'), this.mapOptions);
-		this.getEntities();
+		//this.getEntities();
 	},
 	
 	getGeoLocation: function () {
@@ -87,7 +96,10 @@ MPTREND.map = {
 	},
 	
 	getEntities: function (mpid) {
-		var mpid = mpid || '10251';
+
+		clearOverlays();
+		
+		mpid = mpid || '10251';
 		fullJsonUrl = this.jsonUrl + '?mp=' + mpid;
 		var self = this;
         // do Ajax to put in cache
@@ -98,17 +110,19 @@ MPTREND.map = {
             success: function (jsonData) {
                 for (var i in jsonData) {
                 	var latlng = new google.maps.LatLng(jsonData[i].latitude, jsonData[i].longitude);
+					var title = jsonData[i].name + jsonData[i].context;
 					var marker = new google.maps.Marker({
 					  position: latlng,
 					  icon: self.filter['mp'].markerImageURL,
 					  map: self.mapObj,
-					  title: jsonData[i].name
+					  title: title
 					});
-					
+				markersArray.push(marker);
+
 					(function (mymarker, mylatlng) {
 					
 						var infowindow = new google.maps.InfoWindow({
-							content: jsonData[i].name,
+							content: jsonData[i].context,
 							position: mylatlng
 						});
 						
@@ -130,7 +144,7 @@ MPTREND.getMPs = function () {
 	console.log('getMPs called');
 
     var ajaxRequest = $.ajax({
-		url: '/mplist.json',
+		url: '/code/mplist',
 		dataType: "json",
 
         success: function (jsonData) {
