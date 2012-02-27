@@ -103,12 +103,12 @@
 
   
   <script src="js/plugins.js"></script>
+  <script src="js/jsont.js"></script>
   <script src="js/script.js"></script>
 
     <script>
         var currentSearch = 'London';
         function getHansard() {
-            console.log('hansard');
             $.ajax( {
                 url: 'getHansard.json',
                 data: 'url=http://www.theyworkforyou.com/api/getHansard?key=C96JqqCACkSJGaXNMyGxyLei&search=' + currentSearch + '&output=js',
@@ -118,7 +118,6 @@
             })
         }
         function getGuardian() {
-            console.log('guardian');
             $.ajax( {
                 url: 'uk-home.json',
                 data: 'url=http://content.guardianapis.com/uk-home?format=json&show-fields=all&show-tags=all&show-editors-picks=true&edition=UK&q=' + currentSearch + '&order-by=newest&api-key=tgtgbz3h8ny7hnn9uz45gjvz',
@@ -127,14 +126,12 @@
                 error: errorHandler
             })
         }
-        function getDictionary() { console.log('dictionary'); }
-        function getTwitter() { console.log('twitter'); }
+        function getDictionary() { }
+        function getTwitter() { }
         
         function callbackHansard(data, textStatus, jqXHR) {
-            console.log('callbackHansard')
             var out = $('<div></div>');
             for (var i=0; i<data.rows.length; i++) {
-                //console.log(data.rows[i]);
                 var title = '';
                 if (typeof data.rows[i].speaker !== 'undefined') {
                     title = data.rows[i].speaker.first_name + ' ' + data.rows[i].speaker.last_name + ' ';
@@ -150,82 +147,8 @@
             $('#hansard').html(out);
         }
         function callbackGuardian(data, textStatus, jqXHR) {
-            console.log('callbackGuardian')
             var out = $('<div></div>');
             for (var i=0; i<data.response.editorsPicks.length; i++) {
-                //console.log(data.rows[i]);
-                out.append('<h3>' + data.response.editorsPicks[i].webTitle + '</h3>');
-                out.append('<img src="' + data.response.editorsPicks[i].fields.thumbnail + '" class="thumbnail" alt="">')
-                out.append(data.response.editorsPicks[i].fields.body);
-            }
-            $('#guardian').html(out);
-        }
-        function errorHandler(jqXHR, textStatus, errorThrown) {
-            console.log('error: ' + textStatus);
-            console.log(errorThrown);
-        }
-        var mappings = {
-            '#hansard' : getHansard,
-            '#guardian' : getGuardian,
-            '#dictionary' : getDictionary,
-            '#twitter' : getTwitter
-        }
-        /*$(document).ready(function() {
-            $('#feeds ul a').bind('click', function(event) {
-                mappings[$(this).attr('href')]();
-            })
-        })*/
-    </script>
-
-    <script>
-        var currentSearch = 'London';
-        function getHansard() {
-            console.log('hansard');
-            $.ajax( {
-                url: 'getHansard.json',
-                data: 'url=http://www.theyworkforyou.com/api/getHansard?key=C96JqqCACkSJGaXNMyGxyLei&search=' + currentSearch + '&output=js',
-                dataType: 'json',
-                success: callbackHansard,
-                error: errorHandler
-            })
-        }
-        function getGuardian() {
-            console.log('guardian');
-            $.ajax( {
-                url: 'uk-home.json',
-                data: 'url=http://content.guardianapis.com/uk-home?format=json&show-fields=all&show-tags=all&show-editors-picks=true&edition=UK&q=' + currentSearch + '&order-by=newest&api-key=tgtgbz3h8ny7hnn9uz45gjvz',
-                dataType: 'json',
-                success: callbackGuardian,
-                error: errorHandler
-            })
-        }
-        function getDictionary() { console.log('dictionary'); }
-        function getTwitter() { console.log('twitter'); }
-        
-        function callbackHansard(data, textStatus, jqXHR) {
-            console.log('callbackHansard')
-            var out = $('<div></div>');
-            for (var i=0; i<data.rows.length; i++) {
-                //console.log(data.rows[i]);
-                var title = '';
-                if (typeof data.rows[i].speaker !== 'undefined') {
-                    title = data.rows[i].speaker.first_name + ' ' + data.rows[i].speaker.last_name + ' ';
-                }
-                title += data.rows[i].hdate;
-                out.append('<h3>' + title + '</h3>');
-                if (data.rows[i].body.length > 10) {
-                    out.append(data.rows[i].body);
-                } else {
-                    out.append(data.rows[i].title);
-                }
-            }
-            $('#hansard').html(out);
-        }
-        function callbackGuardian(data, textStatus, jqXHR) {
-            console.log('callbackGuardian')
-            var out = $('<div></div>');
-            for (var i=0; i<data.response.editorsPicks.length; i++) {
-                //console.log(data.rows[i]);
                 out.append('<h3>' + data.response.editorsPicks[i].webTitle + '</h3>');
                 out.append('<img src="' + data.response.editorsPicks[i].fields.thumbnail + '" class="thumbnail" alt="">')
                 out.append(data.response.editorsPicks[i].fields.body);

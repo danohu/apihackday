@@ -1,20 +1,13 @@
 var MPTREND = MPTREND || {};
-var markersArray = [];
-
-function clearOverlays() {
-	  if (markersArray) {
-			    for (var i = 0; i < markersArray.length; i++ ) {
-						      markersArray[i].setMap(null);
-									    }
-					  }
-}
 
 MPTREND.map = {
 	//should be one off initialising for this first bit
 	mapObj: undefined,
 	infowindow: undefined,
+	markersArray: [],
 	jsonUrl: '/code/demo',
 	currentAjaxRequest: undefined,
+	currentOverlay: undefined,
 	filter: {
         mp: {
             clusterImage: [{
@@ -48,13 +41,7 @@ MPTREND.map = {
             clusterGridSize: 80,
             jsontTemplate: {
                 "self": "{container}",
-                "container": "<h2>{$.first_name} {$.last_name}</h2>{$.about_me}{$.website}",
-                "container.about_me": function (about_me) {
-                    return about_me ? "<p>" + about_me + "</p>" : "";
-                },
-                "container.website": function (website) {
-                    return website ? "<p>" + website + "</p>" : "";
-                }
+                "container": "<h2>{$.name}</h2><p>{$.context}</p>"
             }
         }
 	},
@@ -86,9 +73,9 @@ MPTREND.map = {
 			    infowindow = new google.maps.InfoWindow({
 			      map: self.mapObj,
 			      position: self.mapOptions.center,
-			      content: "You are here!"
+			      content: "Your location"
 			    });
-				self.mapObj.panTo(self.mapOptions.center);
+				self.currentOverlay	= infowindow;
 			});
 			return true;
 		}
@@ -97,7 +84,7 @@ MPTREND.map = {
 	
 	getEntities: function (mpid) {
 
-		clearOverlays();
+		this.clearMarkers();
 		
 		mpid = mpid || '10251';
 		fullJsonUrl = this.jsonUrl + '?mp=' + mpid;
@@ -106,7 +93,6 @@ MPTREND.map = {
         this.currentAjaxRequest = $.ajax({
 			url: fullJsonUrl,
 			dataType: "json",
-            //data: $.param(requestQS),
             success: function (jsonData) {
                 for (var i in jsonData) {
                 	var latlng = new google.maps.LatLng(jsonData[i].latitude, jsonData[i].longitude);
@@ -117,31 +103,57 @@ MPTREND.map = {
 					  map: self.mapObj,
 					  title: title
 					});
-				markersArray.push(marker);
 
 					(function (mymarker, mylatlng) {
 					
 						var infowindow = new google.maps.InfoWindow({
-							content: jsonData[i].context,
+							content: jsonT({container: jsonData[i]}, MPTREND.map.filter.mp.jsontTemplate),
 							position: mylatlng
 						});
 						
 						google.maps.event.addListener(marker, 'click', function() {
+							self.clearOverlays();
 							infowindow.open(self.mapObj,mymarker);
 							self.mapObj.panTo(mylatlng);
+							self.currentOverlay	= infowindow;
 						});				
 					
-					} )(marker, latlng);			
+					})(marker, latlng);
+
+					self.markersArray.push(marker);		
 
 				}
             }
         });
+	},
+
+	attachEvents: function () {
+		var self = this;
+        // click Google Maps event for map canvas to clear all overlays
+        google.maps.event.addListener(this.mapObj, 'click', function () {
+			self.clearOverlays();
+        });
+	},
+	
+	//only one overlay should be displayed
+	clearOverlays: function () {
+		var self = this;
+		if (self.currentOverlay.setMap) {
+		    self.currentOverlay.setMap(null);
+		}
+	},
+
+	clearMarkers: function () {
+		if (this.markersArray) {
+			for (var i = 0; i < this.markersArray.length; i++ ) {
+				this.markersArray[i].setMap(null);
+			}
+		}
 	}
 
 };
 
 MPTREND.getMPs = function () {
-	console.log('getMPs called');
 
     var ajaxRequest = $.ajax({
 		url: '/code/mplist',
@@ -150,13 +162,12 @@ MPTREND.getMPs = function () {
         success: function (jsonData) {
         
         	$('#mps').empty();
-            for (var i in jsonData) {		
-
+            for (var i in jsonData) {
 				var s = $('<a id="'+ jsonData[i].person_id +'">' + jsonData[i].name + '</a>').bind('click', clickHandler);
 				$('#mps').append(s);
 
-				if(i > 20) break;	
-			}	
+				if(i > 20) break;
+			}
         }
     });
 	
