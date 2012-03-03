@@ -1,4 +1,7 @@
-from private import KEY_TWFY
+try:
+    from doh.private import KEY_TWFY
+except ImportError:
+    from private import KEY_TWFY
 from twfy import TWFY
 import json
 import copy
