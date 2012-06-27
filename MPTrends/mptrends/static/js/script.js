@@ -143,7 +143,7 @@ MPTREND.getMPs = function () {
 	console.log('getMPs called');
 
     var ajaxRequest = $.ajax({
-		url: '/code/mplist',
+		url: 'static/mplist.json',
 		dataType: "json",
 
         success: function (jsonData) {
