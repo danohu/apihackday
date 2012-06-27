@@ -1,5 +1,8 @@
 
-from private import KEY_CALAIS
+try:
+    from doh.private import KEY_CALAIS
+except ImportError:
+    from private import KEY_CALAIS
 from calais import Calais
 calais = Calais(KEY_CALAIS, submitter="python-calais demo")
 
