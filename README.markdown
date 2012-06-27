@@ -46,6 +46,17 @@ An config file for nginx is included. Copy this into /etc/nginx/sites-enabled, a
 
 $ python site.py
 
+#Getting the Pyramid project running
+
+There is also a [Pyramid](http://docs.pylonsproject.org/en/latest/docs/pyramid.html) project in the `MPTrends` dir.
+It's a breeze to get running using `virtualenvwrapper`. On Ubuntu, from the project root:
+	sudo apt-get install virtualenvwrapper
+	mkvirtualenv mptrends
+	easy_install MPTrends
+	cd MPTrends
+	pserve development.ini --reload
+A rather bare and dysfunctional Pyramid project should now be serving from localhost:6543
+
 #Credits
  - Dan O'Huiginn, [@danohu](http://twitter.com/danohu)
  - Ben Marshall-Corser, [@bmcorser](http://twitter.com/bmcorser)
