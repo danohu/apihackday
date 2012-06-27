@@ -10,14 +10,14 @@
   <meta name="description" content="">
 
   <meta name="viewport" content="width=device-width">
-  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="static/css/style.css">
   
-  <link rel="stylesheet" href="css/bootstrap.css">
-  <link rel="stylesheet" href="css/bootstrap-responsive.css">
+  <link rel="stylesheet" href="static/css/bootstrap.css">
+  <link rel="stylesheet" href="static/css/bootstrap-responsive.css">
   
   <link media="all" type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.17/themes/base/jquery-ui.css" rel="stylesheet">
 
-  <script src="js/libs/modernizr-2.5.2.min.js"></script>
+  <script src="static/js/libs/modernizr-2.5.2.min.js"></script>
 </head>
 <body>
 
@@ -90,23 +90,23 @@
 
 
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-  <script>window.jQuery || document.write('<script src="js/libs/jquery-1.7.1.min.js"><\/script>')</script>
+  <script>window.jQuery || document.write('<script src="static/js/libs/jquery-1.7.1.min.js"><\/script>')</script>
   <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.17/jquery-ui.min.js"></script>
   <script type="text/javascript" src="http://maps.google.com/maps/api/js?v=3.5&amp;sensor=false"></script>
   
-  <script src="js/bootstrap.js"></script>
-  <script src="js/bootstrap-tab.js"></script>
+  <script src="static/js/bootstrap.js"></script>
+  <script src="static/js/bootstrap-tab.js"></script>
 
   
-  <script src="js/plugins.js"></script>
-  <script src="js/script.js"></script>
+  <script src="static/js/plugins.js"></script>
+  Adding static assets<script src="static/js/script.js"></script>
 
     <script>
         var currentSearch = 'London';
         function getHansard() {
             console.log('hansard');
             $.ajax( {
-                url: 'getHansard.json',
+                url: 'static/getHansard.json',
                 data: 'url=http://www.theyworkforyou.com/api/getHansard?key=C96JqqCACkSJGaXNMyGxyLei&search=' + currentSearch + '&output=js',
                 dataType: 'json',
                 success: callbackHansard,
@@ -116,7 +116,7 @@
         function getGuardian() {
             console.log('guardian');
             $.ajax( {
-                url: 'uk-home.json',
+                url: 'static/uk-home.json',
                 data: 'url=http://content.guardianapis.com/uk-home?format=json&show-fields=all&show-tags=all&show-editors-picks=true&edition=UK&q=' + currentSearch + '&order-by=newest&api-key=tgtgbz3h8ny7hnn9uz45gjvz',
                 dataType: 'json',
                 success: callbackGuardian,
