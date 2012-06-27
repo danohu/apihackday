@@ -13,6 +13,8 @@ requires = [
     'pyramid_debugtoolbar',
     'ZODB3',
     'waitress',
+    'kales',
+    'requests',
     ]
 
 setup(name='MPTrends',

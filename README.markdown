@@ -52,9 +52,10 @@ There is also a [Pyramid](http://docs.pylonsproject.org/en/latest/docs/pyramid.h
 It's a breeze to get running using `virtualenvwrapper`. On Ubuntu, from the project root:
 	
     sudo apt-get install virtualenvwrapper
-    mkvirtualenv mptrends
-    easy_install MPTrends
+    mkvirtualenv mptrends --no-site-packages
+    workon mptrends
     cd MPTrends
+    python setup.py install
     pserve development.ini --reload
 
 A rather bare and dysfunctional Pyramid project should now be serving from localhost:6543
