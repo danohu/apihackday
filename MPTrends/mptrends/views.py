@@ -8,9 +8,8 @@ def home(request):
 
 @view_config(context=MPTrends, renderer='json', route_name='graph_json')
 def graph_json(request):
-    something = [1,2,3,4]
-    import ipdb; ipdb.set_trace()
-    return something
+    #import ipdb; ipdb.set_trace()
+    return request.matchdict
 
 @view_config(context=MPTrends, renderer='json', route_name='map_json')
 def map_json(request):
