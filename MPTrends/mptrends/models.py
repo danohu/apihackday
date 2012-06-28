@@ -1,11 +1,30 @@
 from persistent.mapping import PersistentMapping
 from twfy import TWFY
 import json
+import re
+from kales import Kales
 
 
 class MPTrends(PersistentMapping):
-    # MPTrends modules
-    from kales import Kales
+
+    def getGraphData(self,search,ids):
+        data = {}
+        for mpid in ids:
+            freq = {}
+            theywork = TWFY.TWFY('AqHCxnC7THtNEPXRyBAcHUfU')
+            rawtxt = theywork.api.getHansard(output = 'js', person = mpid, search = search)
+            text = ''.join(x for x in rawtxt if ord(x)<127)
+            speeches = json.loads(text)['rows']
+            for row in speeches:
+                #import ipdb; ipdb.set_trace()
+                if(freq.get(row['hdate']) == None):
+                    freq[row['hdate']] = 1
+                else:
+                    freq[row['hdate']] += 1
+            data[mpid] = freq
+            del freq
+        return data
+
     def mptext(mpid = '10251'): #default is william hague
         jstxt = mpspeeches(mpid)
         statements = [x['body'] for x in jstxt['rows']]

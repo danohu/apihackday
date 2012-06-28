@@ -9,12 +9,9 @@ def home(request):
 
 @view_config(context=MPTrends, renderer='json', route_name='graph_json')
 def graph_json(request):
-    for mpid in request.matchdict['ids']:
-        speeches = request.context.mpspeeches(int(mpid))['rows']
-        #import ipdb; ipdb.set_trace()
-        for row in speeches:
-            print re.search(request.matchdict['search'],row['body'])
-    return request.context.mpspeeches(int(request.matchdict['ids'][0]))
+    r = request.matchdict
+    graphData = request.context.getGraphData(r['search'],r['ids'])
+    return graphData
 
 @view_config(context=MPTrends, renderer='json', route_name='map_json')
 def map_json(request):
