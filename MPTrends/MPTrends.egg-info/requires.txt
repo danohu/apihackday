@@ -4,3 +4,5 @@ pyramid_tm
 pyramid_debugtoolbar
 ZODB3
 waitress
+kales
+requests

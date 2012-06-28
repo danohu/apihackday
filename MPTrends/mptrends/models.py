@@ -1,5 +1,11 @@
 from persistent.mapping import PersistentMapping
 
+class Graph(PersistentMapping):
+    __parent__ = __name__ = None
+
+class Map(PersistentMapping):
+    __parent__ = __name__ = None
+
 class MyModel(PersistentMapping):
     __parent__ = __name__ = None
 
