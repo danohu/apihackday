@@ -1,4 +1,7 @@
 from persistent.mapping import PersistentMapping
+from twfy import TWFY
+import json
+
 
 class MPTrends(PersistentMapping):
     # MPTrends modules
@@ -9,12 +12,9 @@ class MPTrends(PersistentMapping):
         return '\n'.join(statements)
     
     def mpspeeches(self,mpid):
-        from twfy import TWFY
-        import json
-
         theywork = TWFY.TWFY('AqHCxnC7THtNEPXRyBAcHUfU')
-
         rawtxt = theywork.api.getHansard(output = 'js', person = mpid)
+        #import ipdb; ipdb.set_trace()
         text = ''.join(x for x in rawtxt if ord(x)<127)
         return json.loads(text)
     
