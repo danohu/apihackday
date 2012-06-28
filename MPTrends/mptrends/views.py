@@ -15,3 +15,10 @@ def graph_json(request):
 def map_json(request):
     return {'project':'MPTrends'}
 
+@view_config(context=MPTrends, renderer='templates/graph.pt', route_name='graph')
+def graph(request):
+    return {'project':'MPTrends'}
+
+@view_config(context=MPTrends, renderer='templates/map.pt', route_name='map')
+def map(request):
+    return {'project':'MPTrends'}

@@ -18,5 +18,7 @@ def main(global_config, **settings):
     config.add_route('home', '/')
     config.add_route('graph_json', '/json/graph/{search}/*ids')
     config.add_route('map_json', '/json/map/{id}')
+    config.add_route('graph', '/graph')
+    config.add_route('map', '/map')
     config.scan()
     return config.make_wsgi_app()
