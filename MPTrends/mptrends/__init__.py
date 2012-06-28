@@ -2,10 +2,6 @@ from pyramid.config import Configurator
 from pyramid_zodbconn import get_connection
 from .models import appmaker
 
-# MPTrends modules
-from kales import Kales
-from twfy import TWFY
-
 def root_factory(request):
     conn = get_connection(request)
     return appmaker(conn.root())
