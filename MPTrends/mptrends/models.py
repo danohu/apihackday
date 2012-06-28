@@ -1,17 +1,11 @@
 from persistent.mapping import PersistentMapping
 
-class Graph(PersistentMapping):
-    __parent__ = __name__ = None
-
-class Map(PersistentMapping):
-    __parent__ = __name__ = None
-
-class MyModel(PersistentMapping):
+class MPTrends(PersistentMapping):
     __parent__ = __name__ = None
 
 def appmaker(zodb_root):
     if not 'app_root' in zodb_root:
-        app_root = MyModel()
+        app_root = MPTrends()
         zodb_root['app_root'] = app_root
         import transaction
         transaction.commit()
