@@ -1,3 +1,14 @@
-<h1>MPTrends</h1>
-<p>ajax calls to <a href="/json/graph/health/10251/10358/11506">/json/graph/health/10251/10358/11506</a></p>
-<p>and <a href="/json/map/10251">/json/map/10251</a></p>
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>MPTrends</title>
+</head>
+<body>
+    <h1>MPTrends</h1>
+    <p>ajax calls to <a href="/json/graph/health/10251/10358/11506">/json/graph/health/10251/10358/11506</a></p>
+    <p>and <a href="/json/map/10251">/json/map/10251</a></p>
+</body>
+</html>
+
+
