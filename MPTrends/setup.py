@@ -15,6 +15,7 @@ requires = [
     'waitress',
     'kales',
     'requests',
+    'ipdb',
     ]
 
 setup(name='MPTrends',
