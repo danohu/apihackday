@@ -55,7 +55,7 @@ It's a breeze to get running using `virtualenvwrapper`. On Ubuntu, from the proj
     mkvirtualenv mptrends --no-site-packages
     workon mptrends
     cd MPTrends
-    python setup.py install
+    python setup.py develop
     pserve development.ini --reload
 
 A rather bare and dysfunctional Pyramid project should now be serving from localhost:6543
