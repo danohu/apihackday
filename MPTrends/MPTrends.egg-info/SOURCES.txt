@@ -49,6 +49,7 @@ mptrends/static/js/libs/modernizr-2.5.2.min.js
 mptrends/templates/home.old.pt
 mptrends/templates/home.pt
 mptrends/templates/mytemplate.pt
+mptrends/templates/oldhome.pt
 mptrends/templates/speaker.pt
 mptrends/templates/json/speaker.pt
 mptrends/twfy/TWFY.py
