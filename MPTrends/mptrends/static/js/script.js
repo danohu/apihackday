@@ -156,7 +156,7 @@ MPTREND.map = {
 MPTREND.getMPs = function () {
 
     var ajaxRequest = $.ajax({
-		url: '/code/mplist',
+		url: '/static/mplist.json',
 		dataType: "json",
 
         success: function (jsonData) {
