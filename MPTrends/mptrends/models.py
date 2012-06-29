@@ -20,10 +20,13 @@ class MPTrends(PersistentMapping):
             data.append({'mpid':mpid,'speeches':speeches})
          
         # This is for Google Charts data structure
+
+        firstrow = ['Date']
         dates = []
         for MP in data:
+            firstrow.append(MP['mpid'])
             for speech in MP['speeches']:
-                dates.append(speech['hdate'])
+                dates.append(speech['hdate'][:-3])
         
         dates = sorted(list(set(dates)))
 
@@ -37,10 +40,10 @@ class MPTrends(PersistentMapping):
                 row.append(0)
             for speech in MP['speeches']:
                 for row in rows:
-                    if row[0] == speech['hdate']:
+                    if row[0] == speech['hdate'][:-3]:
                         row[me] = row[me] + 1
             me = me + 1
-
+        rows.insert(0,firstrow)
         return rows
 
 
