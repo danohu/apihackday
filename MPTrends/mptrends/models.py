@@ -9,7 +9,7 @@ from kales import Kales
 class MPTrends(PersistentMapping):
     __parent__ = __name__ = None
 
-    def graph(self,search,mpids):
+    def chart(self,search,mpids):
         data = []
         for mpid in mpids:
             # TODO: check for cached version of this query, 24 hr expiry

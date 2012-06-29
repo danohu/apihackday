@@ -6,32 +6,34 @@
     <script type="text/javascript" src="https://www.google.com/jsapi"></script>
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
     <script type="text/javascript">
-        $(document).ready(function(){
-        $.ajax({
-            url: '/json/graph/health/10251/10358/11506',
-            contentType: 'json'
-        }).done(function(json){
-            google.load("visualization", "1", {packages:["corechart"]});
-            google.setOnLoadCallback(drawChart);
-            function drawChart() {
-              var data = google.visualization.arrayToDataTable(json);
-      
-              var options = {
-                title: 'MPTrends'
-              };
-      
-              var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
-              chart.draw(data, options);
+        google.load("visualization", "1", {packages:["corechart"]});
+        google.setOnLoadCallback(drawChart);
+        function drawChart(e,query) {
+            if(typeof(query) == 'undefined'){
+                 query = ['uk',10251,10358,11506];
             }
-          });
-      });
-    </script>
+
+            var url = 	'/json/chart/'+query.join('/');
+
+            var json = $.ajax({
+                url: url,
+                dataType : 'json',
+                async: false
+            }).responseText;
+
+            var data = google.visualization.arrayToDataTable(eval(json));
+
+            var options = {
+                title: 'MPTrends'
+            };
+ 
+            var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
+            chart.draw(data, options);
+        }
+   </script>
 </head>
 <body>
 <div id="chart_div" style="width: 900px; height: 500px;"></div>
-    <h1>MPTrends</h1>
-    <p>ajax calls to <a href="/json/graph/health/10251/10358/11506">/json/graph/health/10251/10358/11506</a></p>
-    <p>and <a href="/json/map/10251">/json/map/10251</a></p>
 </body>
 </html>
 
