@@ -46,6 +46,12 @@ class MPTrends(PersistentMapping):
         rows.insert(0,firstrow)
         return rows
 
+    def mplist(self):
+        theywork = TWFY.TWFY('AqHCxnC7THtNEPXRyBAcHUfU')
+        rawtxt = str(theywork.api.getMPs(output = 'js'))
+        text = ''.join(x for x in rawtxt if ord(x)<127)
+        MPs = json.loads(text)
+        return MPs
 
 def appmaker(zodb_root):
     if not 'app_root' in zodb_root:

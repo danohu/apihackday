@@ -13,6 +13,11 @@ def chart_json(request):
     graphData = request.context.chart(r['search'],r['ids'])
     return graphData
 
+@view_config(context=MPTrends, renderer='json', route_name='mplist_json')
+def mplist_json(request):
+    mplist = request.context.mplist()
+    return mplist
+
 @view_config(context=MPTrends, renderer='json', route_name='map_json')
 def map_json(request):
     return {'project':'MPTrends'}

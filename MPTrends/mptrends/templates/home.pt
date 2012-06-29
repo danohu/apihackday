@@ -30,10 +30,28 @@
             var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
             chart.draw(data, options);
         }
+        $(document).ready(function(){
+            var mplist = eval($.ajax({
+                url: '/json/mplist',
+                dataType: 'json',
+                async: false
+            }).responseText);
+            for(i=0;i<mplist.length;i++){
+                var mp = mplist[i];
+                $('<div/>').text(mp.name+' ('+ mp.party+')')
+                    .attr({'id':mp.member_id})
+                    .appendTo($('#mp_list'))
+                    .click(function(){
+                        //add to selected
+                    });
+            }
+        });
    </script>
 </head>
 <body>
-<div id="chart_div" style="width: 900px; height: 500px;"></div>
+<div id="chart_div" style="width: 900px; height: 500px; float: left;"></div>
+<div id="mp_list" style="float: right;">
+<input type="text" id="search_input" /><div id="search_button">Search</div></div>
 </body>
 </html>
 
