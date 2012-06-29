@@ -1,4 +1,5 @@
 from persistent.mapping import PersistentMapping
+from persistent import Persistent
 from twfy import TWFY
 import json
 import re
@@ -6,76 +7,42 @@ from kales import Kales
 
 
 class MPTrends(PersistentMapping):
+    __parent__ = __name__ = None
 
-    def getGraphData(self,search,ids):
-        data = {}
-        for mpid in ids:
-            freq = {}
+    def graph(self,search,mpids):
+        data = []
+        for mpid in mpids:
+            # TODO: check for cached version of this query, 24 hr expiry
             theywork = TWFY.TWFY('AqHCxnC7THtNEPXRyBAcHUfU')
-            rawtxt = theywork.api.getHansard(output = 'js', person = mpid, search = search)
+            rawtxt = str(theywork.api.getHansard(output = 'js', person = mpid, search = search))
             text = ''.join(x for x in rawtxt if ord(x)<127)
             speeches = json.loads(text)['rows']
-            for row in speeches:
-                #import ipdb; ipdb.set_trace()
-                if(freq.get(row['hdate']) == None):
-                    freq[row['hdate']] = 1
-                else:
-                    freq[row['hdate']] += 1
-            data[mpid] = freq
-            del freq
-        return data
+            data.append({'mpid':mpid,'speeches':speeches})
+         
+        # This is for Google Charts data structure
+        dates = []
+        for MP in data:
+            for speech in MP['speeches']:
+                dates.append(speech['hdate'])
+        
+        dates = sorted(list(set(dates)))
 
-    def mptext(mpid = '10251'): #default is william hague
-        jstxt = mpspeeches(mpid)
-        statements = [x['body'] for x in jstxt['rows']]
-        return '\n'.join(statements)
-    
-    def mpspeeches(self,mpid):
-        theywork = TWFY.TWFY('AqHCxnC7THtNEPXRyBAcHUfU')
-        rawtxt = theywork.api.getHansard(output = 'js', person = mpid)
-        #import ipdb; ipdb.set_trace()
-        text = ''.join(x for x in rawtxt if ord(x)<127)
-        return json.loads(text)
-    
-    def mplist():
-         mplist = theywork.api.getMPs(output = 'js')
-         asciisafe = ''.join(x for x in mplist if ord(x) < 127)
-         return json.loads(asciisafe)
-    
-    def places_for_text(speech, context):
-        results = []
-        places = entities.places_from_text(text)
-        for place in places:
-            thiscontext = copy.copy(context)
-            thiscontext.update(entities.placelocation(place))
-            results.append(thiscontext)
-        return results
-    
-    def mpinfo(mpid):
-        return theywork.api.getMP(output = 'js', id = mpid)
-    
-    def placeinfo(mpid = '10251'):
-        mpcontext = {
-                'mp' : mpinfo(mpid)
-                }
-        speeches = mpspeeches(mpid)
-        for speech in speeches['rows']:
-            speechcontext = copy.copy(mpcontext)
-            speechcontext['speech'] = speech
-            try:
-                for place in entities.places_from_text(speech['body']):
-                    placecontext = copy.copy(speechcontext)
-                    placecontext.update(placelocation(place))
-                    results.append(placecontext)
-            except Exception:
-                print('no text for %s' % speech['body'])
-        return results
-    
-        speeches = js
-    
-        places = context_for_speech(places)
-    
-        __parent__ = __name__ = None
+        rows = []
+        for date in dates:
+            rows.append([date])
+
+        me = 1
+        for MP in data:
+            for row in rows:
+                row.append(0)
+            for speech in MP['speeches']:
+                for row in rows:
+                    if row[0] == speech['hdate']:
+                        row[me] = row[me] + 1
+            me = me + 1
+
+        return rows
+
 
 def appmaker(zodb_root):
     if not 'app_root' in zodb_root:

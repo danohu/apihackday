@@ -10,7 +10,7 @@ def home(request):
 @view_config(context=MPTrends, renderer='json', route_name='graph_json')
 def graph_json(request):
     r = request.matchdict
-    graphData = request.context.getGraphData(r['search'],r['ids'])
+    graphData = request.context.graph(r['search'],r['ids'])
     return graphData
 
 @view_config(context=MPTrends, renderer='json', route_name='map_json')
