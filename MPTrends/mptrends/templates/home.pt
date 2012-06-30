@@ -3,6 +3,8 @@
 <head>
     <meta charset="utf-8">
     <title>MPTrends</title>
+    <link href='http://fonts.googleapis.com/css?family=Economica:400,400italic,700,700italic' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="static/css/graph.css">
     <script type="text/javascript" src="https://www.google.com/jsapi"></script>
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
     <script type="text/javascript">
@@ -49,9 +51,13 @@
    </script>
 </head>
 <body>
-<div id="chart_div" style="width: 900px; height: 500px; float: left;"></div>
-<div id="mp_list" style="float: right;">
-<input type="text" id="search_input" /><div id="search_button">Search</div></div>
+  <div id="wrapper">
+    <div id="chart_div"></div>
+    <div id="list_div">
+      <input type="text" id="search_input"><button id="search_button">Search</button>
+      <div id="mp_list"></div>
+    </div>
+  </div>
 </body>
 </html>
 
