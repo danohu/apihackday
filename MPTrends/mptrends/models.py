@@ -1,6 +1,7 @@
 from persistent.mapping import PersistentMapping
 from persistent import Persistent
 from twfy import TWFY
+from time import time
 import json
 import re
 from kales import Kales
@@ -51,7 +52,40 @@ class MPTrends(PersistentMapping):
         rawtxt = str(theywork.api.getMPs(output = 'js'))
         text = ''.join(x for x in rawtxt if ord(x)<127)
         MPs = json.loads(text)
-        return MPs
+        self['cache']['mplist'] = {'json':MPs,'time':time()}
+        import ipdb; ipdb.set_trace()
+        if expiry > (time()+5184000):
+            theywork = TWFY.TWFY('AqHCxnC7THtNEPXRyBAcHUfU')
+            rawtxt = str(theywork.api.getMPs(output = 'js'))
+            text = ''.join(x for x in rawtxt if ord(x)<127)
+            MPs = json.loads(text)
+            self['cache']['mplist'] = {'json':MPs,'time':time()}
+            print 'cache missed'
+            return MPs
+        else:
+            print 'cache hit'
+            return self['cache']['mplist']['time']
+
+class Cache(Persistent):
+     def mplist(self):
+        import ipdb; ipdb.set_trace()
+        theywork = TWFY.TWFY('AqHCxnC7THtNEPXRyBAcHUfU')
+        rawtxt = str(theywork.api.getMPs(output = 'js'))
+        text = ''.join(x for x in rawtxt if ord(x)<127)
+        MPs = json.loads(text)
+        self['cache']['mplist'] = {'json':MPs,'time':time()}
+        import ipdb; ipdb.set_trace()
+        if expiry > (time()+5184000):
+            theywork = TWFY.TWFY('AqHCxnC7THtNEPXRyBAcHUfU')
+            rawtxt = str(theywork.api.getMPs(output = 'js'))
+            text = ''.join(x for x in rawtxt if ord(x)<127)
+            MPs = json.loads(text)
+            self['cache']['mplist'] = {'json':MPs,'time':time()}
+            print 'cache missed'
+            return MPs
+        else:
+            print 'cache hit'
+            return self['cache']['mplist']['time']
 
 def appmaker(zodb_root):
     if not 'app_root' in zodb_root:

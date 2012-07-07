@@ -10,7 +10,7 @@ class ViewTests(unittest.TestCase):
         testing.tearDown()
 
     def test_my_view(self):
-        from .views import my_view
+        from .views import mplist_json
         request = testing.DummyRequest()
-        info = my_view(request)
+        info = mplist_json(request)
         self.assertEqual(info['project'], 'MPTrends')
