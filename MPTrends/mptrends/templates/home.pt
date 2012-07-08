@@ -24,34 +24,93 @@
             var data = google.visualization.arrayToDataTable(eval(json));
 
             var options = {
-                title: 'MPTrends'
+                title: 'MPTrends',
+                curveType: 'function',
+                animation:{
+                    duration: 500,
+                },
             };
  
             var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
             chart.draw(data, options);
         }
         $(document).ready(function(){
-            var mplist = eval($.ajax({
+            var mplist = $.ajax({
                 url: '/json/mplist',
                 dataType: 'json',
-                async: false
-            }).responseText);
-            for(i=0;i<mplist.length;i++){
-                var mp = mplist[i];
-                $('<div/>').text(mp.name+' ('+ mp.party+')')
-                    .attr({'id':mp.member_id})
-                    .appendTo($('#mp_list'))
-                    .click(function(){
-                        //add to selected
+                async: false,
+                success: function(data){
+                    $.each(data,function(party,mps){
+                        var title = $('<h2/>').attr({
+                        }).text(party);
+                        var partyDiv = $('<div/>').attr({
+                            'class':'hidden party',
+                            'party':party,
+                        }).append(title).appendTo('#mp_list');
+                        $.each(mps,function(i,mp){
+                            $('<div/>').attr({
+                                'mpid':mp.person_id,
+                                'class':'mp',
+                            }).click(function(){
+                                if($(this).hasClass('selected')){
+                                    $(this).removeClass('selected');
+                                } else {
+                                    $(this).addClass('selected');
+                                }
+                            }).text(mp.name).appendTo(partyDiv);
+                        });
                     });
-            }
+                }
+            });
+            $('#search').click(function(e){
+                var query = [];
+                query.push($('#search_input').val());
+                $('.mp').each(function(i,mp){
+                    if($(mp).hasClass('selected')){
+                        query.push($(mp).attr('mpid'));
+                    }
+                });
+                console.log(query);
+                drawChart(e,query);
+            });
+            $('.party h2').click(function(){
+                if($(this).parent().hasClass('hidden')){
+                    $(this).parent().removeClass('hidden');
+                } else {
+                    $(this).parent().addClass('hidden');
+                }
+            });
         });
    </script>
+    <style type="text/css">
+        body {
+            font-family:sans;
+            font-size: 10px;
+        }
+        #search {
+            cursor: pointer;
+            background: green;
+            border: 1px solid black;
+        }
+        .party h2 {
+            font-weight: normal;
+            cursor: pointer;
+        }
+        .mp {
+            cursor: pointer;
+        }
+        .hidden .mp {
+            display:none;
+        }
+        .selected.mp {
+            background: yellow;
+        }
+    </style>
 </head>
 <body>
 <div id="chart_div" style="width: 900px; height: 500px; float: left;"></div>
 <div id="mp_list" style="float: right;">
-<input type="text" id="search_input" /><div id="search_button">Search</div></div>
+<input type="text" id="search_input" /><div id="search">Search</div></div>
 </body>
 </html>
 
