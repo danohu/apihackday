@@ -48,7 +48,7 @@ $ python site.py
 
 #Getting the Pyramid project running
 
-There is also a [Pyramid](http://docs.pylonsproject.org/en/latest/docs/pyramid.html) project in the `MPTrends` dir.
+There is also a [Pyramid](http://docs.pylonsproject.org/en/latest/docs/pyramid.html) project in the `MPTrends` dir that uses Google Charts API and Dan's work with the TWFY API. A very broken version of it was submitted to GDG for the IO 2012 "Hack for Good" hackathon.
 It's a breeze to get running using `virtualenvwrapper`. On Ubuntu, from the project root:
 	
     sudo apt-get install virtualenvwrapper
@@ -57,8 +57,6 @@ It's a breeze to get running using `virtualenvwrapper`. On Ubuntu, from the proj
     cd MPTrends
     python setup.py develop
     pserve development.ini --reload
-
-A rather bare and dysfunctional Pyramid project should now be serving from localhost:6543
 
 #Credits
  - Dan O'Huiginn, [@danohu](http://twitter.com/danohu)
