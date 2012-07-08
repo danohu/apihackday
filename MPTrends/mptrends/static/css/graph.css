@@ -1,0 +1,57 @@
+body, input, button {
+    font-family: 'Economica', sans-serif;
+    font-size: 16px;
+    line-height: 24px;
+}
+input, button {
+    font-size: 20px;
+    padding: 8px;
+    display: table-cell;
+}
+#wrapper {
+    display: table;
+    border-radius: 15px;
+    border-spacing: 15px;
+    background: #ccc;
+    /* IE10 Consumer Preview */ 
+    background-image: -ms-radial-gradient(center, ellipse farthest-corner, #FFFFFF 0%, #FFFFFF 50%, #EEEEEE 75%, #999999 100%);
+    
+    /* Mozilla Firefox */ 
+    background-image: -moz-radial-gradient(center, ellipse farthest-corner, #FFFFFF 0%, #FFFFFF 50%, #EEEEEE 75%, #999999 100%);
+    
+    /* Opera */ 
+    background-image: -o-radial-gradient(center, ellipse farthest-corner, #FFFFFF 0%, #FFFFFF 50%, #EEEEEE 75%, #999999 100%);
+    
+    /* Webkit (Safari/Chrome 10) */ 
+    background-image: -webkit-gradient(radial, center center, 0, center center, 505, color-stop(0, #FFFFFF), color-stop(0.5, #FFFFFF), color-stop(0.75, #EEEEEE), color-stop(1, #999999));
+    
+    /* Webkit (Chrome 11+) */ 
+    background-image: -webkit-radial-gradient(center, ellipse farthest-corner, #FFFFFF 0%, #FFFFFF 50%, #EEEEEE 75%, #999999 100%);
+    
+    /* W3C Markup, IE10 Release Preview */ 
+    background-image: radial-gradient(ellipse farthest-corner at center, #FFFFFF 0%, #FFFFFF 50%, #EEEEEE 75%, #999999 100%);
+}
+#wrapper > div {
+    display: table-cell;
+    vertical-align: top;
+}
+#chart_div {
+    width: 900px;
+    border-radius: 15px;
+    overflow: hidden;
+}
+#list_div {
+    width: 300px;
+}
+#mp_list {
+    height: 480px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+#mp_list > div {
+    padding: 2px;
+    border-radius: 2px;
+}
+#mp_list > div:nth-child(2n-1) {
+    background: rgba(51,51,51,0.16)
+}
